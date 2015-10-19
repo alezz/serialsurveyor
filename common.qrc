@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="start">icons/131.png</file>
+        <file alias="stop">icons/142.png</file>
+        <file alias="gear">icons/041.png</file>
+        <file alias="filter">icons/054.png</file>
+        <file alias="disk">icons/096.png</file>
+        <file alias="cross">icons/101.png</file>
+        <file alias="tick">icons/102.png</file>
+        <file alias="plus">icons/103.png</file>
+        <file alias="minus">icons/104.png</file>
+        <file alias="refresh">icons/125.png</file>
+        <file alias="red">icons/151.png</file>
+        <file alias="green">icons/152.png</file>
+        <file alias="yellow">icons/154.png</file>
+        <file alias="open">icons/046.png</file>
+        <file alias="new">icons/171.png</file>
+        <file alias="port">icons/port-icon.png</file>
+        <file alias="nofilter">icons/nofilter.png</file>
+    </qresource>
+</RCC>
