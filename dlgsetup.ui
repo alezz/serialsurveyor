@@ -205,6 +205,16 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Temp.Prefix:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="editTempPrefix"/>
+     </item>
+     <item>
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>File writing interval (ms):</string>

@@ -31,6 +31,9 @@ dlgSetup::dlgSetup(QWidget *parent) :
     //default packet term
     ui->editTermHex->setText("0d");
     this->calcAscii(ui->editTermHex->text());
+
+    //default "temp prefix"
+    ui->editTempPrefix->setText("T");
 }
 
 dlgSetup::~dlgSetup()
@@ -144,4 +147,7 @@ QString dlgSetup::chooseFile()
     return fd.selectedFiles().first();
 }
 
-
+QByteArray dlgSetup::getTempPrefix()
+{
+    return ui->editTempPrefix->text().toLocal8Bit();
+}

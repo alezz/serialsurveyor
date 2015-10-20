@@ -3,6 +3,7 @@
 temperatureMonitorModel::temperatureMonitorModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
+    averageT=0;
 }
 
 QVariant temperatureMonitorModel::data(const QModelIndex &index, int role) const
@@ -10,11 +11,15 @@ QVariant temperatureMonitorModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole) return QVariant();
     switch (index.column())
     {
-        case 0: return QString ("%1,%2").arg(averageT/100).arg(averageT-(averageT/100*100),2,'0');
+        case 0:
+        {
+        int a = averageT-((averageT/100)*100);
+        return QString ("%1,%2").arg(averageT/100).arg(QString("%1").arg(a),2,'0');
+        }
         default:
         {
             int t = deviceT.at(index.column()-1);
-            return QString("%1,%2").arg(t/100).arg(t-(t/100*100),2,'0');
+            return QString("%1,%2").arg(t/100).arg(QString("%1").arg(t-((t/100)*100)),2,'0');
         }
     }
 }

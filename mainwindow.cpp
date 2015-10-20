@@ -174,6 +174,8 @@ void MainWindow::stop()
 
     //status bar message
     ui->statusBar->showMessage("Stopped - Ready.");
+    this->lblDisk->setVisible(false);
+    this->lblLed->setVisible(false);
 
 }
 
@@ -207,9 +209,9 @@ void MainWindow::handleData(QByteArray data)
 
     //temperature
 
-    if (data.startsWith('T'))
+    if (data.startsWith(this->setupDlg->getTempPrefix()))
     {
-        int temp = data.right(data.count()-1).trimmed().toFloat()*100.0;
+        int temp = qRound(data.right(data.count()-1).trimmed().toFloat()*100.0);
 
         if (this->fileLogTemp!=0)
         {

@@ -445,6 +445,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="btnDelCounter">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>del</string>
            </property>
@@ -469,6 +472,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="btnOpen">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -493,6 +499,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="btnRestartCounter">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>zero</string>
            </property>

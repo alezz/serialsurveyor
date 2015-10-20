@@ -24,6 +24,7 @@ public:
     QString getLogAllFileName();
     QString getLogTempFileName();
     int getLogWriteInterval();
+    QByteArray getTempPrefix();
 
     void setupBaseFileNames(QString basePath);
 
