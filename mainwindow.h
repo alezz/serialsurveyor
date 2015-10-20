@@ -3,14 +3,17 @@
 
 #include <QMainWindow>
 
-//#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
-#include <QTime>
+#include <QDateTime>
 #include "logmodel.h"
 #include "countermodel.h"
+#include "temperaturemonitormodel.h"
 #include "serialdevice.h"
 #include "dlgsetup.h"
 #include "dlgexport.h"
+#include <QTimer>
+#include <QFile>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -30,9 +33,18 @@ private:
     LogModel * logModel;
     QSortFilterProxyModel * logProxyModel;
     CounterModel * counterModel;
+    temperatureMonitorModel * temperatureModel;
     dlgSetup * setupDlg;
     dlgExport * exportDlg;
     QByteArray bytefromHex(QString hex_rapresentation);
+    QTimer * timer;
+    QFile * fileLogAll;
+    QFile * fileLogTemp;
+
+    QLabel * lblLed;
+    QLabel * lblDisk;
+
+    bool newdata;
 
 private slots:
     void start();
@@ -45,7 +57,7 @@ private slots:
 
     void handleData(QByteArray data);
 
-    void syslog(QString message, int level = 0);
+    void syslog(QString message, int level = 1);
 
     void calcPatAscii(QString hex);
     void calcPatHex(QString ascii);
@@ -55,6 +67,10 @@ private slots:
     void applyLogFilterAscii(QString ascii);
     void applyLogFilterHex(QString hex);
     void removeLogFilter();
+
+    bool openLogFiles();
+    void closeLogFiles();
+    void timerTimeout();
 
 };
 

@@ -1,5 +1,6 @@
 #include "dlgsetup.h"
 #include "ui_dlgsetup.h"
+#include <QFileDialog>
 
 dlgSetup::dlgSetup(QWidget *parent) :
     QDialog(parent),
@@ -24,6 +25,12 @@ dlgSetup::dlgSetup(QWidget *parent) :
     connect(ui->btnClose,SIGNAL(clicked()),this,SLOT(accept()));
     connect(ui->editTerminator,SIGNAL(textEdited(QString)),this,SLOT(calcHex(QString)));
     connect(ui->editTermHex,SIGNAL(textEdited(QString)),this,SLOT(calcAscii(QString)));
+    connect(ui->btnBrowseLogAll,SIGNAL(clicked()),this,SLOT(browseLogAll()));
+    connect(ui->btnBrowseLogTemp,SIGNAL(clicked()),this,SLOT(browseLogTemp()));
+
+    //default packet term
+    ui->editTermHex->setText("0d");
+    this->calcAscii(ui->editTermHex->text());
 }
 
 dlgSetup::~dlgSetup()
@@ -55,8 +62,36 @@ qint32 dlgSetup::getBaudrate()
     return (qint32)ui->comboBaud->currentText().toInt();
 }
 
+QString dlgSetup::getLogAllFileName()
+{
+    if (ui->checkLogAll->isChecked())
+        return ui->editLogAllFileName->text();
+    else
+        return QString();
+}
+
+QString dlgSetup::getLogTempFileName()
+{
+    if (ui->checkLogTemp->isChecked())
+        return ui->editLogTempFileName->text();
+    else
+        return QString();
+}
+
+int dlgSetup::getLogWriteInterval()
+{
+    return ui->spinLogWriteInterval->value();
+}
+
+void dlgSetup::setupBaseFileNames(QString basePath)
+{
+    ui->editLogAllFileName->setText(basePath + "/all.csv");
+    ui->editLogTempFileName->setText(basePath + "/temp.csv");
+}
+
 void dlgSetup::refresh()
 {
+    ui->list->clear();
     foreach (QSerialPortInfo info, QSerialPortInfo::availablePorts())
     {
         //QListWidgetItem * item = new QListWidgetItem( info.portName(),this->ui->list);
@@ -82,3 +117,31 @@ void dlgSetup::calcAscii(QString hex)
 {
     this->calcAscii(hex.toLatin1());
 }
+
+void dlgSetup::browseLogAll()
+{
+    QString file = chooseFile();
+    if (!file.isEmpty())
+        ui->editLogAllFileName->setText( file);
+}
+
+void dlgSetup::browseLogTemp()
+{
+    QString file = chooseFile();
+    if (!file.isEmpty())
+        ui->editLogTempFileName->setText( file);
+}
+
+QString dlgSetup::chooseFile()
+{
+    QFileDialog fd(this);
+    fd.setFileMode(QFileDialog::AnyFile);
+    fd.setDefaultSuffix("csv");
+    fd.setNameFilter("*.csv");
+    fd.setAcceptMode(QFileDialog::AcceptSave);
+    if (fd.exec()==QDialog::Rejected) return QString();
+    if (fd.selectedFiles().isEmpty()) return QString();
+    return fd.selectedFiles().first();
+}
+
+

@@ -22,14 +22,16 @@ SOURCES += main.cpp\
     countermodel.cpp \
     serialdevice.cpp \
     dlgsetup.cpp \
-    dlgexport.cpp
+    dlgexport.cpp \
+    temperaturemonitormodel.cpp
 
 HEADERS  += mainwindow.h \
     logmodel.h \
     countermodel.h \
     serialdevice.h \
     dlgsetup.h \
-    dlgexport.h
+    dlgexport.h \
+    temperaturemonitormodel.h
 
 FORMS    += mainwindow.ui \
     dlgsetup.ui \

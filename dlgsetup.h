@@ -21,6 +21,12 @@ public:
     QByteArray getTerminator();
     qint32 getBaudrate();
 
+    QString getLogAllFileName();
+    QString getLogTempFileName();
+    int getLogWriteInterval();
+
+    void setupBaseFileNames(QString basePath);
+
 private:
     Ui::dlgSetup *ui;
 
@@ -29,6 +35,9 @@ private slots:
     void calcHex(QString ascii);
     void calcAscii(QByteArray hex);
     void calcAscii(QString hex);
+    void browseLogAll();
+    void browseLogTemp();
+    QString chooseFile();
 };
 
 #endif // DLGSETUP_H
