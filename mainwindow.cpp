@@ -72,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->editFilterAscii,SIGNAL(textEdited(QString)),this,SLOT(applyLogFilterAscii(QString)));
     connect(ui->editFilterHex,SIGNAL(textEdited(QString)),this,SLOT(applyLogFilterHex(QString)));
     connect(ui->btnClearFilter,SIGNAL(clicked()),this,SLOT(removeLogFilter()));
+    connect(ui->btnClear,SIGNAL(clicked()),this->logModel,SLOT(clear()));
+    connect(ui->btnRestartCounter,SIGNAL(clicked()),this->counterModel,SLOT(clearCounters()));
 
     ui->logView->horizontalHeader()->setStretchLastSection(true);
 

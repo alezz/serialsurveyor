@@ -60,3 +60,10 @@ int LogModel::addData(QString serial, QByteArray data)
     endInsertRows();
     return log.count()-1;
 }
+
+void LogModel::clear()
+{
+    beginRemoveRows(QModelIndex(),0,log.count()-1);
+    this->log.clear();
+    endRemoveRows();
+}

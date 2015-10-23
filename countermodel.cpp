@@ -97,6 +97,17 @@ QModelIndex CounterModel::checkForMatch(QByteArray data, QString subCounterName)
     return index;
 }
 
+void CounterModel::clearCounters()
+{
+    for(int i = 0; i< this->counters.count();i++)
+    {
+        this->counters[i].total=0;
+        for (int j=0; j<this->counters[i].subCounters[j];j++)
+            this->counters[i].subCounters[j]=0;
+    }
+    emit dataChanged(this->index(0,0),this->index(this->rowCount()-1,this->columnCount()-1));
+}
+
 void CounterModel::addSubCounter(QString name, int init)
 {
     //add sub counter to both subCounterNames (headers) and to the subCounter list of

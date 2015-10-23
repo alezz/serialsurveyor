@@ -19,7 +19,7 @@ signals:
 public slots:
 
     int addData(QString serial, QByteArray data);
-
+    void clear();
 
 private:
     struct LogEntry {

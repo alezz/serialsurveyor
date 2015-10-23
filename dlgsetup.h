@@ -15,6 +15,7 @@ class dlgSetup : public QDialog
 public:
     explicit dlgSetup(QWidget *parent = 0);
     ~dlgSetup();
+    int exec();
 
     QStringList getSelectedDevices();
     int getTimeout();

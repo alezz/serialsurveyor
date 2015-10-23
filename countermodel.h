@@ -20,6 +20,7 @@ public slots:
     //void incrementCounter(QByteArray pattern);
     QModelIndex checkForMatch(QByteArray data, QString subCounterName = QString());
     //bool addSubCounter(QString name);
+    void clearCounters();
 
 private:
     struct CounterEntry

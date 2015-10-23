@@ -155,11 +155,35 @@
          <item>
           <widget class="QToolButton" name="btnClearFilter">
            <property name="text">
-            <string>add</string>
+            <string>remove filter</string>
            </property>
            <property name="icon">
             <iconset resource="common.qrc">
              <normaloff>:/icon/nofilter</normaloff>:/icon/nofilter</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnClear">
+           <property name="text">
+            <string>clear all</string>
+           </property>
+           <property name="icon">
+            <iconset resource="common.qrc">
+             <normaloff>:/icon/cross</normaloff>:/icon/cross</iconset>
            </property>
           </widget>
          </item>
@@ -500,7 +524,7 @@
          <item>
           <widget class="QToolButton" name="btnRestartCounter">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>zero</string>

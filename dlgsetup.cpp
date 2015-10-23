@@ -20,7 +20,7 @@ dlgSetup::dlgSetup(QWidget *parent) :
                                <<"115200"
                                <<"230400");
     ui->comboBaud->setCurrentIndex(4);  // 9600
-    refresh();
+
     connect(ui->btnRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
     connect(ui->btnClose,SIGNAL(clicked()),this,SLOT(accept()));
     connect(ui->editTerminator,SIGNAL(textEdited(QString)),this,SLOT(calcHex(QString)));
@@ -39,6 +39,12 @@ dlgSetup::dlgSetup(QWidget *parent) :
 dlgSetup::~dlgSetup()
 {
     delete ui;
+}
+
+int dlgSetup::exec()
+{
+    refresh();
+    return QDialog::exec();
 }
 
 QStringList dlgSetup::getSelectedDevices()
