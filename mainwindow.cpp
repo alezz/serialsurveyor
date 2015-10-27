@@ -40,13 +40,32 @@ MainWindow::MainWindow(QWidget *parent) :
     // !! Important !! Actions are accessed by index in some parts of the code
     //                 so the order with which are added is important...
     //--- from here
-    ui->toolBar->addAction(QIcon(":/icon/gear"),"setup",this->setupDlg,SLOT(exec()));
-    ui->toolBar->addAction(QIcon(":/icon/start"),"go",this,SLOT(start()));
-    ui->toolBar->addAction(QIcon(":/icon/stop"),"stop",this,SLOT(stop()));
+    ui->toolBar->addAction(QIcon(":/icon/gear"),"setup",this->setupDlg,SLOT(exec()));   //0
+    ui->toolBar->addAction(QIcon(":/icon/start"),"go",this,SLOT(start()));              //1
+    ui->toolBar->addAction(QIcon(":/icon/stop"),"stop",this,SLOT(stop()));              //2
     ui->toolBar->actions().last()->setEnabled(false);
-    //--- till here
+
 
     //ui->toolBar->addAction(QIcon(":/icon/disk"),"save",this,SLOT(save()));
+
+    this->editSendData=new QLineEdit(this);
+    ui->toolBar->addWidget(this->editSendData);                                        //3
+    ui->toolBar->addAction("send",this,SLOT(_send()));                                  //4
+    ui->toolBar->actions().last()->setEnabled(false);
+
+    // --- till here
+
+    ui->toolBar->addAction("temperature",ui->frameTemperature ,SLOT(setVisible(bool)));       //5
+    ui->toolBar->actions().last()->setCheckable(true);
+    ui->toolBar->actions().last()->setChecked(true);
+
+    ui->toolBar->addAction("counters",ui->frameCounters ,SLOT(setVisible(bool)));       //6
+    ui->toolBar->actions().last()->setCheckable(true);
+    ui->toolBar->actions().last()->setChecked(true);
+    ui->toolBar->addAction("system log",ui->frameSyslog ,SLOT(setVisible(bool)));       //7
+    ui->toolBar->actions().last()->setCheckable(true);
+    ui->toolBar->actions().last()->setChecked(true);
+
 
 
     logModel = new LogModel(this);
@@ -100,6 +119,7 @@ MainWindow::~MainWindow()
     delete exportDlg;
     delete lblLed;
     delete lblDisk;
+    delete this->editSendData;
     delete ui;
 
 }
@@ -118,6 +138,7 @@ void MainWindow::start()
     ui->toolBar->actions().at(0)->setEnabled(false);
     ui->toolBar->actions().at(1)->setEnabled(false);
     ui->toolBar->actions().at(2)->setEnabled(true);
+    ui->toolBar->actions().at(4)->setEnabled(true);
 
     //serialports
     openSerialPorts();
@@ -166,6 +187,7 @@ void MainWindow::stop()
     ui->toolBar->actions().at(0)->setEnabled(true);
     ui->toolBar->actions().at(1)->setEnabled(true);
     ui->toolBar->actions().at(2)->setEnabled(false);
+    ui->toolBar->actions().at(4)->setEnabled(false);
 
     //serialports
     closeSerialPorts();
@@ -179,6 +201,31 @@ void MainWindow::stop()
     this->lblDisk->setVisible(false);
     this->lblLed->setVisible(false);
 
+}
+
+void MainWindow::_send()
+{
+    char crc = 0;
+    QByteArray data=this->editSendData->text().toLocal8Bit();
+    int l = data.length();  //data includes COMMAND + DATA
+    if (l<6)                // minimum lenght is 6 (for COMMAND)
+    {
+        data.append(QByteArray(6-l,'0'));
+        l=6;
+    }
+    l= data.length()-6; //the part of COMMAND is excluded from the len count
+    data.prepend("WR");
+    data.prepend((char)(l&0xFF));   //less significant byte last
+    data.prepend((char)(l>>8));     //most significant byte first
+    data.prepend(':');
+    foreach (char c, data)  //CRC includes ':', lenght, mode (WR), and COMMAND+DATA
+        crc+=c;
+    data.prepend(0x01);
+    data.append(crc);
+    data.append(0x0d);
+    data.append(0x04);
+    foreach (serialDevice * dev, this->serialPorts)
+        dev->write_data(data);
 }
 
 void MainWindow::closeSerialPorts()

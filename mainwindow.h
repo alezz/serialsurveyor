@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QLabel>
+#include <QLineEdit>
 
 namespace Ui {
 class MainWindow;
@@ -40,7 +41,7 @@ private:
     QTimer * timer;
     QFile * fileLogAll;
     QFile * fileLogTemp;
-
+    QLineEdit * editSendData;
     QLabel * lblLed;
     QLabel * lblDisk;
 
@@ -49,6 +50,8 @@ private:
 private slots:
     void start();
     void stop();
+
+    void _send();
 
     void openSerialPorts();
     void closeSerialPorts();

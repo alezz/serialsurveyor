@@ -18,7 +18,7 @@ serialDevice::serialDevice(QString portName, QObject *parent) :
 
 bool serialDevice::openDevice(qint32 baud, int timeout, QByteArray terminator )
 {
-    if (this->serialPort->open(QIODevice::ReadOnly))
+    if (this->serialPort->open(QIODevice::ReadWrite))
     {
         this->serialPort->setBaudRate(baud);
         connect(this->serialPort,SIGNAL(readyRead()),this,SLOT(handleReadyRead()));
@@ -39,6 +39,12 @@ serialDevice::~serialDevice()
 QString serialDevice::portName()
 {
     return this->serialPort->portName();
+}
+
+void serialDevice::write_data(const QByteArray data)
+{
+    this->serialPort->write(data);
+    this->serialPort->flush();
 }
 
 void serialDevice::handleReadyRead()

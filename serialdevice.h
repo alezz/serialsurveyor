@@ -14,6 +14,7 @@ public:
                     int timeout=0,
                     QByteArray terminator = QByteArray());
     QString portName();
+    void write_data(const QByteArray data);
 
 signals:
     void dataReady(QByteArray data);
